@@ -8,7 +8,7 @@ class Application < Sinatra::Base
   end
 
   get '/' do
-    haml :index
+    haml :chat_spa
   end
 
   private

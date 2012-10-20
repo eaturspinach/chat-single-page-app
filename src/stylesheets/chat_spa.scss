@@ -1,0 +1,44 @@
+body {
+	width    : 100%;
+	height   : 100%;
+	overflow : hidden;
+	background-color : #777;
+}
+
+/** Begin spa Namespace selectors */
+#chat-spa {
+	position : absolute;
+	top      : 8px;
+	left     : 8px;
+	bottom   : 8px;
+	right    : 8px;
+	background-color : #fff;
+	border-radius    : 0 8px 0 8px;
+	min-height : 500px;
+	min-width  : 500px;
+}
+
+/** End spa Namespace selectors */
+
+/** Begin utility selectors */
+
+.chat-spa-x-select {}
+.chat-spa-x-clearfloat {
+	height     : 0      !important;
+	float      : none   !important;
+	visibility : hidden !important;
+	clear      : both   !important;
+}
+
+/** End utility selectors */
+
+.chat-spa-slider {
+	position : absolute;
+	bottom   : 0;
+	right    : 2px;
+	width    : 300px;
+	height   : 16px;
+	cursor   : pointer;
+	border-radius    : 8px 0 0 0;
+	background-color : #f00;
+}
