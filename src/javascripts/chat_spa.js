@@ -5,6 +5,9 @@
   	white  : true
 */
 
+
+/* global $, ChatSpa */
+
 var ChatSPA = (function($) {
 
 	var
@@ -12,7 +15,7 @@ var ChatSPA = (function($) {
 			extended_height: 434,
 			extended_title: 'Click to retract',
 			retracted_height: 16,
-			retracted_title: 'Click to extend',
+			retractekd_title: 'Click to extend',
 			template_html: '<div class="chat-spa-slider"></div>'
 		},
 		$chatSlider,
@@ -37,26 +40,31 @@ var ChatSPA = (function($) {
 				.attr('title', configMap.retracted_title);
 			return true;
 		}
-		
 		// do not take action if slider is in transition
 		return false;
 	};
 	
 	// Event handler
-	onClickSlider = function(event){
+	onClickSlider = function (event) {
 		toggleSlider();
 		return false;
 	}
 	
 	// Public method
-	initModule = function( $container ) {
-		$container.html(configMap.template_html);
-		$chatSlider = $container.find('.chat-spa-slider');
-		
-		$chatSlider
-			.attr('title',configMap.retracted_title)
-			.click(onClickSlider);
-		return true;
+	initModule = function ($container) {
+		$('#spa').html(
+		  '<h1 style="display:inline-block; margin:25px;">'
+		    + 'hello world!'
+		  + '</h1>'
+			); 
+		};
+		// $container.html(configMap.template_html);
+		// $chatSlider = $container.find('.chat-spa-slider');
+		// 
+		// $chatSlider
+		// 	.attr('title',configMap.retracted_title)
+		// 	.click(onClickSlider);
+		// return true;
 	}
 	
 	return {initModule : initModule};
