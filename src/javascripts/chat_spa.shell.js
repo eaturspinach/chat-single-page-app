@@ -33,8 +33,11 @@ ChatSPA.shell = (function (){
 	setJqueryMap = function ( $container ){
 		jqueryMap = { $container : $container };
 	};
+	
+	// Begin Event Handlers
+	
 
-	// Begin Public method /initModule/
+	// Begin Public methods 
 	initModule = function ( $container ){
 		$container.html( configMap.main_html );
 		setJqueryMap( $container );
