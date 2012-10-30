@@ -6,7 +6,7 @@
 */
 
 
-/* global $, ChatSpa */
+/* global $, ChatSPA */
 
 var ChatSPA = (function($) {
 
@@ -52,19 +52,14 @@ var ChatSPA = (function($) {
 	
 	// Public method
 	initModule = function ($container) {
-		$('#spa').html(
-		  '<h1 style="display:inline-block; margin:25px;">'
-		    + 'hello world!'
-		  + '</h1>'
-			); 
-		};
-		// $container.html(configMap.template_html);
-		// $chatSlider = $container.find('.chat-spa-slider');
-		// 
-		// $chatSlider
-		// 	.attr('title',configMap.retracted_title)
-		// 	.click(onClickSlider);
-		// return true;
+		ChatSPA.shell.initModule($('#chat-spa'));
+		$container.html(configMap.template_html);
+		$chatSlider = $container.find('.chat-spa-slider');
+		
+		$chatSlider
+			.attr('title',configMap.retracted_title)
+			.click(onClickSlider);
+		return true;
 	}
 	
 	return {initModule : initModule};
