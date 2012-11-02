@@ -15,13 +15,11 @@
 
       %script{:src => "/assets/application.js"}
       :javascript
-         $(document).ready(
-            function () { ChatSPA.initModule( $('#chat-spa') ); }
-        );
+           $(document).ready(
+              function () { ChatSPA.initModule( $('#chat-spa') ); }
+           );
   %body
     #content
       #chat-spa
-
-          
       = yield
 
