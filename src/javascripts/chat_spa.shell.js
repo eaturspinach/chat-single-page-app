@@ -24,7 +24,7 @@ ChatSPA.shell = (function (){
 			+ '<div class="chat-spa-shell-foot"></div>'
 			+ '<div class="chat-spa-shell-chat"></div>'
 			+ '<div class="chat-spa-shell-modal"></div>',
-			chat_extend_time	: 1000,
+			chat_extend_time	: 250,
 			chat_retract_time	: 300,
 			chat_extend_height	: 450,
 			chat_retract_height	: 15
@@ -40,28 +40,31 @@ ChatSPA.shell = (function (){
 		var $container = stateMap.$container;
 		jqueryMap = { 
 			$container : $container, 
-			$chat : $container.find('.chat-spa-shell-chat')
+			$chat_window : $container.find('.chat-spa-shell-chat')
 		};
 	};
 	
 	// Extends or retracts Chat Slider
 	toggleChat = function(do_extend, callback){
 		var
-			px_chat_ht = jqueryMap.$chat.height(),
-			is_sliding = (
-				px_chat_ht !== configMap.chat_retract_height
-			 && px_chat_ht !== configMap.chat_extend_height
-			)
+			px_chat_ht = jqueryMap.$chat_window.height(),
+			is_open    = px_chat_ht == configMap.chat_extend_height,
+			is_closed  = px_chat_ht == configMap.chat_retract_height,
+			is_sliding = !is_open && !is_closed;
 		
 		if(is_sliding) { return false; }
 		
 		// Begin extend Chat Slider
 		if(do_extend){
-			jqueryMap.$chat.animate(
+			jqueryMap.$chat_window.animate(
 				{ height: configMap.chat_extend_height},
 				configMap.chat_extend_time,
-				function(){
-					if(callback){ callback(jqueryMap.$chat); }
+				function (){
+					jqueryMap.$chat_window.attr(
+						'title', configMap.chat_extended_title
+					);
+					stateMap.is_chat_retracted = false;
+					if ( callback ) { callback( jqueryMap.$chat_window ); }
 				}
 			);
 			return true;
@@ -69,21 +72,33 @@ ChatSPA.shell = (function (){
 		// End extend Chat Slider
 		
 		// Begin retract Chat Slider
-		jqueryMap.$chat.animate(
+		jqueryMap.$chat_window.animate(
 			{ height: configMap.chat_retract_height},
 			configMap.chat_retract_time,
-			function(){
-				if(callback){ callback(jqueryMap.$chat); }
+			function (){
+				jqueryMap.$chat_window.attr(
+					'title', configMap.chat_retracted_title
+				);
+				stateMap.is_chat_retracted = true;
+				if ( callback ) { callback( jqueryMap.$chat_window ); }
 			}
 		);
+		return true;
 		// End retract Chat Slider
 	};
 	// End toggleChat
-	
 	// ------------------- End DOM Method ------------------- 
 	
 	
 	// ------------------- Begin Event Handlers ------------------- 
+	onClickChat = function ( event) {
+		 if ( toggleChat( stateMap.is_chat_retracted ) ) {
+		    $.uriAnchor.setAnchor({
+		      chat: ( stateMap.is_chat_retracted ? 'open' : 'closed' )
+		    });
+		}
+		return false;
+	};
 	// ------------------- End Event Handlers ------------------- 
 	
 
@@ -91,13 +106,16 @@ ChatSPA.shell = (function (){
 	
 	// Begin Public method /initModule/
 	initModule = function ( $container ){
+		// load HTML and map jQuery collections
 		$container.html( configMap.main_html );
 		stateMap.$container = $container;
 		setJqueryMap();
 		
-		// test toggle
-		setTimeout( function (){toggleChat( true ); }, 3000 );
-		setTimeout( function (){toggleChat( false );}, 8000 );
+		// initialize chat slider and bind click handler
+	    stateMap.is_chat_retracted = true;
+	    jqueryMap.$chat_window
+	      .attr( 'title', configMap.chat_retracted_title )
+	      .click( onClickChat );
 	};
 	// End PUBLIC method /initModule/
 	
