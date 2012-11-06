@@ -105,7 +105,7 @@ ChatSPA.shell = (function (){
 	// End toggleChat
 	
 	// Begin DOM method /changeAnchorPart/ - Changes part of the URI anchor component
-	changeAnchorPort = function(arg_map){
+	changeAnchorPart = function(arg_map){
 		var
 			anchor_map_revise = copyAnchorMap(),
 			bool_return = true,
@@ -147,17 +147,57 @@ ChatSPA.shell = (function (){
 		  	return bool_return;
 	};
 	// End DOM method /changeAnchorPart/
-	
 	// ------------------- End DOM Method ------------------- 
 	
 	
 	// ------------------- Begin Event Handlers ------------------- 
-	onClickChat = function ( event) {
-		 if ( toggleChat( stateMap.is_chat_retracted ) ) {
-		    $.uriAnchor.setAnchor({
-		      chat: ( stateMap.is_chat_retracted ? 'open' : 'closed' )
-		    });
+	onChangeAddress = function(event){
+		var
+			anchor_map_previous = copyAnchorMap(),
+			anchor_map_proposed,
+			_s_chat_previous, s_chat_proposed,
+			_s_chat_proposed;
+		
+		// attempt to parse anchor
+		try { 
+			anchor_map_proposed = $.uriAnchor.makeAnchorMap(); 
+		} catch ( error ) {
+			$.uriAnchor.setAnchor( anchor_map_previous, null, true );
+			return false;
 		}
+		stateMap.anchor_map = anchor_map_proposed;
+		
+		// convenience vars
+		_s_chat_previous = anchor_map_previous._s_chat;
+		_s_chat_proposed = anchor_map_proposed._s_chat;
+		
+		// Begin adjust chat component if changed
+		if ( ! anchor_map_previous || _s_chat_previous !== _s_chat_proposed ){
+			s_chat_proposed = anchor_map_proposed.chat;
+			switch ( s_chat_proposed ) {
+				case 'open'   :
+				toggleChat( true );
+				break;
+			case 'closed' :
+				toggleChat( false );
+				break;
+			default  :
+				toggleChat( false );
+				delete anchor_map_proposed.chat;
+				$.uriAnchor.setAnchor( anchor_map_proposed, null, true );
+
+			} 
+		}
+		// End adjust chat component if changed
+			
+		return false
+	}
+	// End Event handler /onChangeAddress/
+	
+	onClickChat = function ( event) {
+		changeAnchorPart({
+			chat: ( stateMap.is_chat_retracted ? 'open' : 'closed' )
+		});
 		return false;
 	};
 	// ------------------- End Event Handlers ------------------- 
@@ -177,6 +217,15 @@ ChatSPA.shell = (function (){
 	    jqueryMap.$chat_window
 	      .attr( 'title', configMap.chat_retracted_title )
 	      .click( onClickChat );
+	
+		// configure uriAnchor to use our schema
+		$.uriAnchor.configModule({
+			schema_map : configMap.anchor_schema_map
+		});
+		
+		// bind address change events
+		// requires the address plugin
+		$.address.change( onChangeAddress );
 	};
 	// End PUBLIC method /initModule/
 	
