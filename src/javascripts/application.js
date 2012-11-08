@@ -3,7 +3,7 @@
 //= require vendor/jquery.address-1.4
 //= require chat_spa
 //= require chat_spa.butil
-//= require chat_spa.model
 //= require chat_spa.util
+//= require chat_spa.model
 //= require chat_spa.shell
 //= require chat_spa.chat_module
