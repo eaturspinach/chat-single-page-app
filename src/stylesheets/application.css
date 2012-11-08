@@ -2,4 +2,5 @@
   *= require normalize
   *= require chat_spa
   *= require chat_spa.shell
+  *= require chat_spa.chat
 */
