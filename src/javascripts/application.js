@@ -6,4 +6,4 @@
 //= require chat_spa.util
 //= require chat_spa.model
 //= require chat_spa.shell
-//= require chat_spa.chat
+//= require chat_spa.chat_module

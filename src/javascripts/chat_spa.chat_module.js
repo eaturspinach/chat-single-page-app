@@ -12,7 +12,7 @@
 
 /*global $, spa */
 
-chat_spa.chat = (function () {
+ChatSPA.chat = (function () {
   //---------------- BEGIN MODULE SCOPE VARIABLES --------------
   var
     configMap = {
