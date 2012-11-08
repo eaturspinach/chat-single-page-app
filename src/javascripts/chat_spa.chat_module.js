@@ -54,7 +54,7 @@ ChatSPA.chat = (function () {
   // Throws     : none
   //
   configModule = function ( input_map ) {
-    spa.util.setConfigMap({
+    ChatSPA.util.setConfigMap({
       input_map    : input_map,
       settable_map : configMap.settable_map,
       config_map   : configMap
@@ -72,6 +72,7 @@ ChatSPA.chat = (function () {
   //
   initModule = function ( $container ) {
     $container.html( configMap.main_html );
+	// hi there
     stateMap.$container = $container;
     setJqueryMap();
     return true;

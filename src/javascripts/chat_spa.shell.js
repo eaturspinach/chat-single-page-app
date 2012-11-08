@@ -69,7 +69,6 @@ ChatSPA.shell = (function (){
 			is_sliding = !is_open && !is_closed;
 		
 		if(is_sliding) { return false; }
-		
 		// Begin extend Chat Slider
 		if(do_extend){
 			jqueryMap.$chat_window.animate(
@@ -222,6 +221,10 @@ ChatSPA.shell = (function (){
 		$.uriAnchor.configModule({
 			schema_map : configMap.anchor_schema_map
 		});
+		
+		// configure and initialize feature modules
+	    ChatSPA.chat.configModule( {} );
+	    ChatSPA.chat.initModule( jqueryMap.$chat_window );
 		
 		// bind address change events
 		// requires the address plugin
